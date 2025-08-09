@@ -1,8 +1,8 @@
-const { app, handleNotification } = require('../index'); // Importe o `app`
+const { app, handleNotification } = require('../index'); 
 const amqp = require('amqplib');
-const request = require('supertest'); // Instale o supertest para testar a rota HTTP
+const request = require('supertest'); 
 
-// Mock mais robusto para a biblioteca amqplib
+
 jest.mock('amqplib', () => ({
   connect: jest.fn(() =>
     Promise.resolve({
@@ -11,7 +11,7 @@ jest.mock('amqplib', () => ({
           assertQueue: jest.fn(),
           sendToQueue: jest.fn(),
           consume: jest.fn(),
-          // Adicionar um mock para o .on('error') para evitar mais erros
+          
           on: jest.fn(), 
         })
       ),
@@ -20,7 +20,7 @@ jest.mock('amqplib', () => ({
   ),
 }));
 
-// Use uma variável para o servidor para poder fechá-lo
+
 let server;
 
 describe('Função de Publicação de Mensagem', () => {
@@ -35,18 +35,18 @@ describe('Função de Publicação de Mensagem', () => {
     json: jest.fn(),
   };
 
-  // Inicializa o servidor antes de todos os testes
+  
   beforeAll(async () => {
-    // Configura o mock do canal antes de iniciar o servidor
+    
     const connection = await amqp.connect('amqp://localhost');
     const channel = await connection.createChannel();
     global.channel = channel;
     
-    // Inicia o servidor e o armazena na variável
-    server = app.listen(3001); // Use uma porta diferente para o teste
+
+    server = app.listen(3001); 
   });
 
-  // Fecha o servidor depois que todos os testes terminam
+ 
   afterAll(done => {
     server.close(done);
   });
@@ -63,8 +63,7 @@ describe('Função de Publicação de Mensagem', () => {
       },
     };
 
-    // Use o supertest para simular a requisição HTTP
-    // Isso garante que o middleware do express e a rota sejam testados
+    
     await request(server)
       .post('/api/notificar')
       .send(req.body)

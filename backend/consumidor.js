@@ -1,5 +1,5 @@
 const amqp = require('amqplib');
-const RABBITMQ_URL = 'amqps://bjnuffmq:gj-YQIiEXyfxQxjsZtiYDKeXIT8ppUq7@jaragua-01.lmq.cloudamqp.com/bjnuffmq';
+const RABBITMQ_URL = process.env.RABBITMQ_URL;
 const INPUT_QUEUE = 'fila.notificacao.entrada.CLARA';
 const STATUS_QUEUE = 'fila.notificacao.status.CLARA';
 
