@@ -1,4 +1,5 @@
 const amqp = require('amqplib');
+require('dotenv').config();
 const RABBITMQ_URL = process.env.RABBITMQ_URL;
 const INPUT_QUEUE = 'fila.notificacao.entrada.CLARA';
 const STATUS_QUEUE = 'fila.notificacao.status.CLARA';
